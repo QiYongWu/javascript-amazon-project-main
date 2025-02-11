@@ -473,11 +473,47 @@
           Added
         </div>
   
-        <button class="add-to-cart-button button-primary">
+        <button class="add-to-cart-button button-primary js-add-to-cart"
+        data-product-name = "${product.name}"
+        data-product-id = "${product.id}">  
           Add to Cart
         </button>
       </div>
     `;
   });
 
+/*
+data attribute  <button data-buttonName = "&{value}">button</button> 必须以data-为开头
+console.log(button.dataset)
+*/
+
   document.querySelector('.js-products-grid').innerHTML = products_html;
+
+  document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
+              
+    button.addEventListener('click',function(){
+        const productName = button.dataset.productName;
+        const productId = button.dataset.productId;
+        let matchingItem;
+        cart.forEach((item) => {
+          if (productId === item.productId){
+            matchingItem = item;
+          }
+        });
+
+        if(matchingItem){
+          matchingItem.quantity ++;
+        } else {
+          cart.push({
+            productId : productId,
+            productName : productName,
+            quantity : 1
+          });
+        }
+
+        
+      
+        console.log(cart);
+        
+    })
+  });
