@@ -84,4 +84,4 @@ const products = [
     `;
   });
 
-  console.log(products_html);
+  document.querySelector('.js-products-grid').innerHTML = products_html;
