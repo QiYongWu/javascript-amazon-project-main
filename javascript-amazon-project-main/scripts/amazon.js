@@ -453,8 +453,8 @@
   
         <div class="product-quantity-container">
           <select id = "product-quantity-selections"
-          data-product-name = ${product.name}
-          data-product-id = ${product.id}>
+          data-product-name = "${product.name}"
+        data-product-id = "${product.id}">
             <option selected value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -469,8 +469,11 @@
         </div>
   
         <div class="product-spacer"></div>
-  
-        <div class="added-to-cart">
+
+        <div class="added-to-cart js-added-to-cart" 
+        data-product-name = "${product.name}"
+        data-product-id = "${product.id}"
+         >
           <img src="images/icons/checkmark.png">
           Added
         </div>
@@ -498,6 +501,7 @@ console.log(button.dataset)
         let selectedValue = 1; //默认值
         const productName = button.dataset.productName;
         const productId = button.dataset.productId;
+        showAdded3s(productId,productName);//显示added
         selectedValues.forEach((item)=>{
           if(item.productId === productId || item.productName === productName){
              selectedValue = Number(item.selectedValue);

@@ -141,11 +141,11 @@
   /* At first, the "Added to cart" message will
      be invisible. Use JavaScript to change the
      opacity and make it visible. */
-  opacity: 0;
+  opacity: 0;  /*0-1 完全透明（不可见）至完全不透明（可见），0-1可见度逐渐增加 */
 }
 
 .added-to-cart img {
-  height: 20px;
+  height: 10px;
   margin-right: 5px;
 }
 
