@@ -452,7 +452,9 @@
         </div>
   
         <div class="product-quantity-container">
-          <select>
+          <select id = "product-quantity-selections"
+          data-product-name = ${product.name}
+          data-product-id = ${product.id}>
             <option selected value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -492,8 +494,16 @@ console.log(button.dataset)
   document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
               
     button.addEventListener('click',function(){
+       
+        let selectedValue = 1; //默认值
         const productName = button.dataset.productName;
         const productId = button.dataset.productId;
+        selectedValues.forEach((item)=>{
+          if(item.productId === productId || item.productName === productName){
+             selectedValue = Number(item.selectedValue);
+          }
+        })
+
         let matchingItem;
         cart.forEach((item) => {
           if (productId === item.productId){
@@ -502,18 +512,37 @@ console.log(button.dataset)
         });
 
         if(matchingItem){
-          matchingItem.quantity ++;
+          matchingItem.quantity +=selectedValue;
         } else {
           cart.push({
             productId : productId,
             productName : productName,
-            quantity : 1
+            quantity : selectedValue
           });
         }
 
-        
-      
         console.log(cart);
-        
+        let cartQuantity = 0;
+  cart.forEach((item) =>{
+       cartQuantity  = Number(cartQuantity) + Number(item.quantity);
+  })
+       
+        //cartQuantity interactive  购物车里的数目交互
+        const jsCartQuantity = document.querySelector('.js-cart-quantity');
+        //若有多个同类名元素需要查询，使用 querySelectorAll
+
+        jsCartQuantity.innerHTML = cartQuantity;  
+        //item.innerHTML 可以获取到item包含的内容以及修改item包含的内容
+        /*  
+        item.innerHTML = newContent;
+           <item>
+            content =>newContent
+           </item>
+        */
+      
+       
     })
   });
+
+
+
