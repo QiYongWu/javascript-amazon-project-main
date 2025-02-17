@@ -1,11 +1,13 @@
 //document.querySelector(".product-quantity-container select")
 
+import { selectedValues } from "../data/selectedValue.js";
+
 //初始化
 const quantitySelections = document.querySelectorAll("#product-quantity-selections");
  quantitySelections.forEach((item)=>{
     
-    productId = item.dataset.productId;
-    productName = item.dataset.productName;
+    let  productId = item.dataset.productId;
+    let  productName = item.dataset.productName;
     let selectedValue = item.value;
     let element = {
         productId : productId,

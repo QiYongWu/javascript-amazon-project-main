@@ -1,1 +1,2 @@
 let selectedValues = [];
+export {selectedValues}
