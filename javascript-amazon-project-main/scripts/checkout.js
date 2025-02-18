@@ -3,18 +3,17 @@ import {products} from '../data/products.js'
 import { GetRightMoney } from './money.js';
 import { deliveryDates } from '../data/deliveryDate.js';
 import { ResetCartStorage } from '../data/cart.js';
+import { SaveToStorage } from '../data/cart.js';
 let checkoutHTML ='';
 
-console.log(cart);
+
 
     cart.forEach( (cartItem) => {
-        console.log(cartItem.productId,cartItem.productName,cartItem.quantity);
 
         const cartProduct = products.find(product => 
         product.id === cartItem.productId && product.name === cartItem.productName
         );
 
-        console.log(cartProduct)
         
 
     /* products.forEach((product) => {
@@ -26,7 +25,9 @@ console.log(cart);
 
     let cartItemHTML = 
         `
-        <div class="cart-item-container">
+        <div class="cart-item-container"
+        data-cart-product-id = ${cartItem.productId}
+        data-cart-product-name = ${cartItem.productName}>
                     <div class="delivery-date"> <!--发货日期-->
                     Delivery date: ${deliveryDates[0].delivery_date}
                     </div>
@@ -49,7 +50,9 @@ console.log(cart);
                         <span class="update-quantity-link link-primary">
                             Update
                         </span>
-                        <span class="delete-quantity-link link-primary">
+                        <span class="delete-quantity-link link-primary"
+                        data-cart-product-id = ${cartItem.productId}
+                        data-cart-product-name = ${cartItem.productName}>
                             Delete
                         </span>
                         </div>
@@ -125,3 +128,47 @@ function RemoveAllProductsInCheckout(){
         item.remove();
     })
 }
+
+
+//delete
+const cartDeletions = document.querySelectorAll(".delete-quantity-link");
+cartDeletions.forEach((cartDeletion) =>{
+    cartDeletion.addEventListener('click',() =>{
+        //console.log('deleted'); 完成
+        const cartItemContainers = document.querySelectorAll(".cart-item-container");
+        //console.log(cart);
+        cartItemContainers.forEach(( cartItemContainer) => {
+           /*完成
+            console.log(cartDeletion.dataset.cartProductId);
+            console.log(cartItemContainer.dataset.cartProductId);
+            console.log('\n');
+            console.log(cartDeletion.dataset.cartProductName);
+            console.log(cartItemContainer.dataset.cartProductName);
+            console.log('\n')
+            */
+            let removeCartItem; //寻找要移除的元素
+            if(cartDeletion.dataset.cartProductId == cartItemContainer.dataset.cartProductId){
+                console.log(cartItemContainer);
+                
+                 removeCartItem = cart.find((cartItem) => {
+                    return cartItem.productId == cartDeletion.dataset.cartProductId
+                })
+                console.log(removeCartItem);
+                
+                let removeCartItemIndex;
+                cart.forEach((cartProduct,index) => {
+                    if(cartProduct.productId === removeCartItem.productId){
+                        removeCartItemIndex = index;
+                    }
+                });
+                cart.splice(removeCartItemIndex, 1);
+               
+                console.log(cart);
+                cartItemContainer.remove();//移除该商品
+                    
+        
+                  
+            }
+        })
+    })
+})
